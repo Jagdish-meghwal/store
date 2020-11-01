@@ -1,37 +1,32 @@
-import React, { Component, Fragment } from 'react'
-import { ProductConsumer } from '../../Context'
-import Title from '../Title'
-import CartColumn from './CartColumn'
-import CartList from './CartList'
-import EmptyCart from './EmptyCart'
-export default class Default extends Component {
-    render() {
-        return (
-            <section>
-                <ProductConsumer>
-                    {
-                        value=>{
-                            const {cart} = value;
-                            if(cart.length>0){
-                                return(
-                                    <Fragment>
-                                    <Title name="your" title="Cart" />
-                                    <CartColumn />
-                                    <CartList value={value}/>
-                                    </Fragment>
-                                )
-                            }
-                            else{
-                                return(
-                                    <EmptyCart />
-                                )
-                            }
-                        }
-                    }
-                </ProductConsumer>
-
-                
-            </section>
-        )
-    }
+import React, { Component } from "react";
+import Title from "../Title";
+import CartColumns from "./CartColumns";
+import CartList from "./CartList";
+import CartTotals from "./CartTotals";
+import { ProductConsumer } from "../../context";
+import EmptyCart from "./EmptyCart";
+export default class Store extends Component {
+  render() {
+    return (
+      <section>
+        <ProductConsumer>
+          {value => {
+            const { cart } = value;
+            if (cart.length > 0) {
+              return (
+                <React.Fragment>
+                  <Title name="your" title="cart" />
+                  <CartColumns />
+                  <CartList value={value} />
+                  <CartTotals value={value} history={this.props.history} />
+                </React.Fragment>
+              );
+            } else {
+              return <EmptyCart />;
+            }
+          }}
+        </ProductConsumer>
+      </section>
+    );
+  }
 }
